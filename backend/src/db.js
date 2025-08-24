@@ -2,11 +2,16 @@ import mongoose from "mongoose";
 
 export const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://localhost/appGymDB");
-    console.log("DB is connected");
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("✅ MongoDB Atlas está conectado");
   } catch (error) {
-    console.log(error);
+    console.error("❌ Error al conectar a MongoDB:", error);
+    process.exit(1);
   }
 };
 
-export default connectDB
+export default connectDB;
+
