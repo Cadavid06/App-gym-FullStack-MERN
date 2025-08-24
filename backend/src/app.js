@@ -8,7 +8,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://5wlpjd2w-5173.use2.devtunnels.ms",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
