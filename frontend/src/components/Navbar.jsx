@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Menu, X } from "lucide-react" 
 
 export default function Navbar() {
-  const { isAuthenticated, logout, user } = useAuth()
+  const { isAuthenticated, logout } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
 
   if (!isAuthenticated) return null
@@ -21,7 +21,6 @@ export default function Navbar() {
             Gym Manager
           </span>
         </Link>
-        <p>Welcome, {user?.email}</p>
 
         {/* Botón menú móvil */}
         <button
