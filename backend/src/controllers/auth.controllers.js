@@ -79,7 +79,7 @@ export const verifyToken = async (req, res) => {
 
   if (!token) return res.status(401).json({ message: "Unauthorized" });
 
-  jwt.verify(token, TOKEN_SECRET, async (err, user) => {
+  jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
     if (err) return res.status(401).json({ message: "Unauthorized" });
     const userFound = await Admin.findById(user.id);
 
