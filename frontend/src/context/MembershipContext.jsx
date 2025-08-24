@@ -74,23 +74,26 @@ export const MembershipProvider = ({ children }) => {
     }
   };
 
-  const updateMembership = async (id, data) => {
-    try {
-      const res = await updateMembershipRequest(id, data);
-
-      setMembership(
-        membership.map((m) =>
-          m._id === id
-            ? { ...m, ...res.data } // aquí mezclamos lo viejo con lo nuevo
-            : m
-        )
-      );
-    } catch (error) {
-      console.error("Error add payments:", error);
-      setErrors(error.response?.data || ["Unexpected error"]);
-      throw error;
-    }
-  };
+const updateMembership = async (id, data) => {
+  try {
+    const res = await updateMembershipRequest(id, data);
+    
+    // Obtén el objeto del usuario actualizado desde la respuesta
+    const updatedUser = res.data.user; 
+    
+    setMembership(
+      membership.map((m) =>
+        m._id === id
+          ? { ...m, ...updatedUser } // Combina el objeto original 'm' con los datos actualizados
+          : m
+      )
+    );
+  } catch (error) {
+    console.error("Error al actualizar la membresía:", error);
+    setErrors(error.response?.data || ["Error inesperado"]);
+    throw error;
+  }
+};
 
   const addPayments = async (id, amount) => {
     try {

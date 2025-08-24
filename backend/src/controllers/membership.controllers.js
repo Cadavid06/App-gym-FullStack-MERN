@@ -109,10 +109,9 @@ export const getDaysLeft = async (req, res) => {
 };
 
 export const updateUserData = async (req, res) => {
-  const { id } = req.params; // ID del usuario o cliente
+  const { id } = req.params; 
   const { clientName, clientDocument, clientPhone } = req.body;
 
-  // Validar que al menos un dato de cliente venga en el body
   if (!clientName && !clientDocument && !clientPhone) {
     return res.status(400).json({
       message:
@@ -129,7 +128,8 @@ export const updateUserData = async (req, res) => {
         ...(clientPhone && { clientPhone }),
       },
       { new: true }
-    );
+    )
+    .populate('memberShipType'); // ¡Agrega esta línea!
 
     if (!updatedUser) {
       return res.status(404).json({ message: "Cliente no encontrado" });
