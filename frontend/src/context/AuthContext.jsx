@@ -1,5 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest } from "../api/auth";
+import {
+  registerRequest,
+  loginRequest,
+  verifyTokenRequest,
+  logoutRequest,
+} from "../api/auth";
 import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
@@ -64,7 +69,7 @@ export const AuthProvider = ({ children }) => {
   const signIn = async (user) => {
     try {
       const res = await loginRequest(user);
-      console.log(res.data);
+      localStorage.setItem("authToken", res.data.token);
       setUser(res.data);
       setIsAuthenticated(true);
     } catch (error) {
@@ -73,17 +78,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-const logout = async () => {
-  try {
-    const res = logoutRequest()
-    setUser(null);
-    setIsAuthenticated(false);
-    setErrors([]);
-  } catch (error) {
-    console.error("Error al hacer logout:", error);
-  }
-};
-
+  const logout = async () => {
+    try {
+      const res = logoutRequest();
+      setUser(null);
+      setIsAuthenticated(false);
+      setErrors([]);
+    } catch (error) {
+      console.error("Error al hacer logout:", error);
+    }
+  };
 
   return (
     <AuthContext.Provider
