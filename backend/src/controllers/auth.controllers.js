@@ -77,20 +77,23 @@ export const logout = (req, res) => {
 };
 
 export const verifyToken = async (req, res) => {
-  const { token } = req.cookies;
+  let token = req.cookies.token;
+
+  // Si no hay cookie, intenta leer de Authorization header
+  if (!token && req.headers.authorization) {
+    token = req.headers.authorization.split(" ")[1];
+  }
 
   if (!token) return res.status(401).json({ message: "Unauthorized" });
 
   jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
     if (err) return res.status(401).json({ message: "Unauthorized" });
     const userFound = await Admin.findById(user.id);
-
     if (!userFound) return res.status(401).json({ message: "Unauthorized" });
 
     return res.json({
-      id: userFound._id,
+      id: userFound.id,
       email: userFound.email,
-      token: token, // Envía el token en el cuerpo de la respuesta
     });
   });
 };
