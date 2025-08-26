@@ -2,8 +2,7 @@ import Admin from "../models/admin.models.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { createdAccessToken } from "../libs/jwt.js";
-import { TOKEN_SECRET } from "../config.js";
-import { email } from "zod";
+
 
 export const register = async (req, res) => {
   const { email, password } = req.body;

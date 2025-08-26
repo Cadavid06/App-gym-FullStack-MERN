@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import MemberShipsPage from "./pages/MembershipsPage";
@@ -10,9 +10,9 @@ import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    <AuthProvider>
-      <MembershipProvider>
-        <BrowserRouter>
+    <HashRouter>
+      <AuthProvider>
+        <MembershipProvider>
           <Navbar />
           <Routes>
             <Route path="/" element={<LoginPage />} />
@@ -24,9 +24,9 @@ function App() {
               <Route path="/membership/:id" element={<MembershipFormPage />} />
             </Route>
           </Routes>
-        </BrowserRouter>
-      </MembershipProvider>
-    </AuthProvider>
+        </MembershipProvider>
+      </AuthProvider>
+    </HashRouter>
   );
 }
 

@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import fondo2 from "/images/fondo2.jpg";
 
 function RegisterPage() {
   const {
@@ -23,7 +24,7 @@ function RegisterPage() {
   return (
     <div
       className="h-screen flex justify-center items-center bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/images/fondo2.jpg')" }}
+      style={{ backgroundImage: `url(${fondo2})` }}
     >
       <div className="w-full max-w-md p-8 rounded-2xl shadow-2xl bg-black/50 backdrop-blur-md border border-emerald-500/20">
         <h1 className="text-3xl font-bold text-emerald-400 mb-6 text-center">
