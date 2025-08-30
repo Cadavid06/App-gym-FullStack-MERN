@@ -1,3 +1,5 @@
+// MembershipsTable.jsx
+
 import React, { useState } from "react";
 import { useMembership } from "../context/MembershipContext";
 import {
@@ -11,11 +13,11 @@ import {
 import MembershipsModal from "./MembershipsModals";
 import UpdateModals from "./UpdateModals";
 import PaymentsModals from "./PaymentsModals";
-import RenewModal from './RenewModal'
+import RenewModal from "./RenewModal";
 import ConfirmModal from "./DeleteMembershipModal";
 
-export default function MembershipsTable() {
-  const { membership, getMembershipById, getDaysLeft, deleteMembership } = useMembership();
+export default function MembershipsTable({ membership }) {
+  const { getMembershipById, getDaysLeft, deleteMembership } = useMembership();
   const [expandedRow, setExpandedRow] = useState(null);
   const [selectedMembership, setSelectedMembership] = useState(null);
   const [daysLeft, setdaysLeft] = useState(null);
@@ -37,7 +39,7 @@ export default function MembershipsTable() {
     const data = await getMembershipById(id);
     setSelectedMembership(data);
     const daysLeft = await getDaysLeft(id);
-    setdaysLeft(daysLeft)
+    setdaysLeft(daysLeft);
     setIsModalOpenMembership(true);
   };
 
@@ -98,9 +100,7 @@ export default function MembershipsTable() {
                     </td>
                     <td className="px-6 py-4 hidden sm:table-cell">
                       <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                        {m.memberShipType?.type ||
-                          m.memberShipType?.name ||
-                          "—"}
+                        {m.memberShipType?.type || m.memberShipType?.name || "—"}
                       </span>
                     </td>
                     <td className="px-6 py-4">
@@ -131,7 +131,6 @@ export default function MembershipsTable() {
                       </button>
                     </td>
                   </tr>
-
                   {expandedRow === m._id && (
                     <tr key={`${m._id}-expanded`}>
                       <td colSpan="4" className="px-6 py-4 bg-zinc-700/20">
@@ -181,7 +180,6 @@ export default function MembershipsTable() {
           </table>
         </div>
       </div>
-
       {/* Modal ver */}
       <MembershipsModal
         isOpen={isModalOpenMembership}
@@ -191,14 +189,14 @@ export default function MembershipsTable() {
       />
       {/* Modal para actualizar */}
       <UpdateModals
-        key={`update-${update?._id}`} 
+        key={`update-${update?._id}`}
         isOpen={isModalOpenUpdate}
         onClose={() => setIsModalOpenUpdate(false)}
         membership={update}
       />
       {/* Modal para pagos */}
       <PaymentsModals
-        key={`payments-${payments?._id}`} 
+        key={`payments-${payments?._id}`}
         isOpen={isModalOpenPayments}
         onClose={() => setisModalOpenPayments(false)}
         membership={payments}
@@ -212,7 +210,7 @@ export default function MembershipsTable() {
       />
       {/* Modal para renovar membresía */}
       <RenewModal
-        key={`renew-${renew?._id}`} // agregando prefijo único para evitar keys duplicadas
+        key={`renew-${renew?._id}`}
         isOpen={isModalOpenRenew}
         onClose={() => setisModalOpenRenew(false)}
         membership={renew}
